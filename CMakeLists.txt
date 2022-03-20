@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-std=c++17)
 
-set(SOURCES src/main.cpp)
+set(SOURCES src/main.cpp src/Renderer.cpp src/Controller.cpp src/Player.cpp src/Game.cpp)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
