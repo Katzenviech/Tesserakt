@@ -36,6 +36,9 @@ Renderer::Renderer(int screen_width, int screen_height, int rect_size)
         SDL_Quit();
     }
 
+    // TODO: Make dependend on initial player position
+    sdl_rect = { (int)((screen_width - rect_size) / 2.0), (int)((screen_height - rect_size) / 2.0), m_rect_size, m_rect_size};
+
 }
 
 Renderer::~Renderer()
@@ -51,8 +54,6 @@ void Renderer::render(const Player& player)
     /* Clear screen */
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
-
-    sdl_rect = {(int)player.getX(), (int)player.getY(), m_rect_size, m_rect_size};
 
     sdl_rect.x = (int)player.getX();
     sdl_rect.y = (int)player.getY();
