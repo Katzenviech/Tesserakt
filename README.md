@@ -21,13 +21,19 @@ e.g. C:/SDL2 (there should be a lib, include and bin folder in this directory) -
 ## build using CMake
 inside cloned source folder:
 On Linux:
+```
     cmake -Bbuild -S.
+```
 
 On Windows:
+```
     cmake -G"MinGW Makefiles" -Bbulid -S.
+```
 
 then
+```
     cmake --build build
+```
 
 ## run
 On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add this directory to your System PATH
