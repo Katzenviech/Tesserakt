@@ -10,7 +10,7 @@ Test in cmd-window with g++ --version
 Download SDL2-devel-2.0.20-mingw.tar.gz (or newer) from https://www.libsdl.org/download-2.0.php
 
 Extract to a directory (e.g. using 7zip)
-Copy files for 64bit version from e.g. C:\SDL2\SDL2-2.0.20\i686-w64-mingw32 to e.g. C:\SDL2\  (do not use spaces in the directory name)
+Copy files for 64bit version from e.g. C:\SDL2\SDL2-2.0.20\x86_64-w64-mingw32 to e.g. C:\SDL2\  (do not use spaces in the directory name)
 
 Set system environment variable called SDL2_PATH to where you copied the SDL2 devel files
 e.g. C:/SDL2 (there should be a lib, include and bin folder in this directory) - use a **forward** slash!!
@@ -28,4 +28,4 @@ then
 cmake --build build
 
 ## run
-On windows copy over SDL2.dll from %SDL2_PATH%/bin or add this directory to your System PATH
+On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add this directory to your System PATH
