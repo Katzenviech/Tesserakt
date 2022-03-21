@@ -25,6 +25,10 @@ public:
     int getWidth() const;
     int getHeight() const;
     int getSize() const;
+    int getColorR() const;
+    int getColorG() const;
+    int getColorB() const;
+    int getColorA() const;
 
     // Setter
     void setX(float x);
@@ -46,5 +50,9 @@ private:
     int m_width;
     int m_height;
     int m_size;
-    
+    int m_colorR = 255;
+    int m_colorG = 122;
+    int m_colorB = 0;
+    int m_colorA = 255;
+
 };

@@ -84,3 +84,23 @@ void Player::setCanJump(bool set)
 {
     m_can_jump = set;
 }
+
+int Player::getColorR() const
+{
+    return m_colorR;
+}
+
+int Player::getColorG() const
+{
+    return m_colorG;
+}
+
+int Player::getColorB() const
+{
+    return m_colorB;
+}
+
+int Player::getColorA() const
+{
+    return m_colorA;
+}

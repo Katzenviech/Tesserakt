@@ -16,7 +16,6 @@ public:
 private:
   SDL_Window* sdl_window;
   SDL_Renderer* sdl_renderer;
-  SDL_Rect sdl_rect;
 
   int m_screen_width;
   int m_screen_height;

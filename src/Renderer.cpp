@@ -36,9 +36,6 @@ Renderer::Renderer(int screen_width, int screen_height, int rect_size)
         SDL_Quit();
     }
 
-    // TODO: Make dependend on initial player position
-    sdl_rect = { (int)((screen_width - rect_size) / 2.0), (int)((screen_height - rect_size) / 2.0), m_rect_size, m_rect_size};
-
 }
 
 Renderer::~Renderer()
@@ -55,11 +52,10 @@ void Renderer::render(const Player& player)
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 
-    sdl_rect.x = (int)player.getX();
-    sdl_rect.y = (int)player.getY();
-
+    SDL_Rect sdl_rect {(int)player.getX(), (int)player.getY(), (int)player.getSize(), (int)player.getSize()};
+    
     /* Draw the rectangle */
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 122, 0, 255);
+    SDL_SetRenderDrawColor(sdl_renderer, player.getColorR(), player.getColorG(), player.getColorB(), player.getColorA());
     SDL_RenderFillRect(sdl_renderer, &sdl_rect);
     /* Draw to window and loop */
     SDL_RenderPresent(sdl_renderer);
