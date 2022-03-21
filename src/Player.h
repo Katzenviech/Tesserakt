@@ -8,7 +8,6 @@ public:
             float x_vel,
             float y_vel,
             int speed,
-            int jump,
             int width,
             int height,
             int size
@@ -20,8 +19,7 @@ public:
     float getXVel() const;
     float getYVel() const;
     int getSpeed() const;
-    int getJump() const;
-    bool canJump() const;
+
     int getWidth() const;
     int getHeight() const;
     int getSize() const;
@@ -35,7 +33,6 @@ public:
     void setY(float y);
     void setXVel(float x_vel);
     void setYVel(float y_vel);
-    void setCanJump(bool set);
     
 private:
     float m_x_pos;
@@ -43,10 +40,7 @@ private:
     float m_x_vel;
     float m_y_vel;
     int m_speed;
-    int m_jump;
-    
-    bool m_can_jump = false;
-    
+   
     int m_width;
     int m_height;
     int m_size;

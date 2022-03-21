@@ -1,5 +1,5 @@
 #include <iostream>
-#include "renderer.h"
+#include "Renderer.h"
 
 Renderer::Renderer(int screen_width, int screen_height, int rect_size)
     : m_screen_width{screen_width}, m_screen_height{screen_height}, m_rect_size{rect_size}
@@ -52,7 +52,7 @@ void Renderer::render(const Player& player)
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 
-    SDL_Rect sdl_rect {(int)player.getX(), (int)player.getY(), (int)player.getSize(), (int)player.getSize()};
+    SDL_Rect sdl_rect {(int)player.getX(), (int)player.getY(), player.getSize(), player.getSize()};
     
     /* Draw the rectangle */
     SDL_SetRenderDrawColor(sdl_renderer, player.getColorR(), player.getColorG(), player.getColorB(), player.getColorA());

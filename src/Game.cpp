@@ -1,7 +1,5 @@
 #include "Game.h"
 
-Game::Game(int gravity) : m_gravity{gravity} {}
-
 void Game::run(Controller& controller, Renderer& renderer, Player& player, int target_frame_duration)
 {
     int title_timestamp = SDL_GetTicks();
@@ -48,12 +46,8 @@ void Game::update(Controller& controller, Player& player, int target_frame_durat
 
     // Move the player
     player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
-    player.setYVel(player.getYVel() + m_gravity);
-    if (controller.get_jump_pressed() && player.canJump())
-    {
-        player.setCanJump(false);
-        player.setYVel(player.getJump());
-    }
+    player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
+    
     player.setX(player.getX() + player.getXVel() / 60); // TODO: Must depend on FPS
     player.setY(player.getY() + player.getYVel() / 60);
     if (player.getX() <= 0)
@@ -63,10 +57,5 @@ void Game::update(Controller& controller, Player& player, int target_frame_durat
     if (player.getY() <= 0)
         player.setY(0);
     if (player.getY() >= (player.getHeight() - player.getSize()))
-    {
-        player.setYVel(0);
         player.setY(player.getHeight() - player.getSize());
-        if (!controller.get_jump_pressed())
-            player.setCanJump(true);
-    }
 }

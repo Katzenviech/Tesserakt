@@ -1,14 +1,13 @@
 #include "Player.h"
 
-Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int jump, int width, int height, int size) : m_x_pos{x_pos},
-                                                                                                                           m_y_pos{y_pos},
-                                                                                                                           m_x_vel{x_vel},
-                                                                                                                           m_y_vel{y_vel},
-                                                                                                                           m_speed{speed},
-                                                                                                                           m_jump{jump},
-                                                                                                                           m_width{width},
-                                                                                                                           m_height{height},
-                                                                                                                           m_size{size} {}
+Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int width, int height, int size) : m_x_pos{x_pos},
+                                            m_y_pos{y_pos},
+                                            m_x_vel{x_vel},
+                                            m_y_vel{y_vel},
+                                            m_speed{speed},
+                                            m_width{width},
+                                            m_height{height},
+                                            m_size{size} {}
 
 float Player::getX() const
 {
@@ -33,16 +32,6 @@ float Player::getYVel() const
 int Player::getSpeed() const
 {
     return m_speed;
-}
-
-int Player::getJump() const
-{
-    return m_jump;
-}
-
-bool Player::canJump() const
-{
-    return m_can_jump;
 }
 
 int Player::getWidth() const
@@ -78,11 +67,6 @@ void Player::setXVel(float x_vel)
 void Player::setYVel(float y_vel)
 {
     m_y_vel = y_vel;
-}
-
-void Player::setCanJump(bool set)
-{
-    m_can_jump = set;
 }
 
 int Player::getColorR() const
