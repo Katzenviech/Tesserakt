@@ -19,7 +19,7 @@ e.g. C:/SDL2 (there should be a lib, include and bin folder in this directory) -
 
 
 ## build using CMake
-inside cloned source folder:
+inside cloned folder with CMakeLists.txt:
 
 On Linux:
 ```
