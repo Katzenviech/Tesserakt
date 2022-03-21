@@ -1,5 +1,7 @@
 # Tesserakt
 
+Build Status: ![Build Status](https://github.com/Katzenviech/Tesserakt/workflows/build/badge.svg)
+
 ## prerequisite to compile with MinGW64 on Windows
 Download MinGW64 e.g. from https://github.com/brechtsanders/winlibs_mingw or https://winlibs.com/ and extract e.g. to C:\MINGW64
 
