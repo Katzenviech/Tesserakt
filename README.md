@@ -20,6 +20,7 @@ e.g. C:/SDL2 (there should be a lib, include and bin folder in this directory) -
 
 ## build using CMake
 inside cloned source folder:
+
 On Linux:
 ```
     cmake -Bbuild -S.
@@ -27,7 +28,7 @@ On Linux:
 
 On Windows:
 ```
-    cmake -G"MinGW Makefiles" -Bbulid -S.
+    cmake -G"MinGW Makefiles" -Bbuild -S.
 ```
 
 then
