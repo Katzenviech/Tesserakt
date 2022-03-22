@@ -1,99 +1,11 @@
 #include <cmath>
 #include "Player.h"
 
-BREAK BUILD
-Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int width, int height, int size) : m_x_pos{x_pos},
-                                            m_y_pos{y_pos},
-                                            m_x_vel{x_vel},
-                                            m_y_vel{y_vel},
-                                            m_speed{speed},
-                                            m_width{width},
-                                            m_height{height},
-                                            m_size{size} {}
-
-float Player::getX() const
+Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int width, int height, int size) : 
+Asset(x_pos, y_pos, x_vel, y_vel, speed, width, height, size)
 {
-    return m_x_pos;
-}
-
-float Player::getY() const
-{
-    return m_y_pos;
-}
-
-float Player::getXVel() const
-{
-    return m_x_vel;
-}
-
-float Player::getYVel() const
-{
-    return m_y_vel;
-}
-
-int Player::getSpeed() const
-{
-    return m_speed;
-}
-
-int Player::getWidth() const
-{
-    return m_width;
-}
-
-int Player::getHeight() const
-{
-    return m_height;
-}
-
-int Player::getSize() const
-{
-    return m_size;
-}
-
-void Player::setX(float x)
-{
-    m_x_pos = x;
-}
-
-void Player::setY(float y)
-{
-    m_y_pos = y;
-}
-
-void Player::setXVel(float x_vel)
-{
-    m_x_vel = x_vel;
-}
-
-void Player::setYVel(float y_vel)
-{
-    m_y_vel = y_vel;
-}
-
-int Player::getColorR() const
-{
-    return m_colorR;
-}
-
-int Player::getColorG() const
-{
-    return m_colorG;
-}
-
-int Player::getColorB() const
-{
-    return m_colorB;
-}
-
-int Player::getColorA() const
-{
-    return m_colorA;
-}
-
-void Player::normalizeSpeed(){
-    if((fabs(m_x_vel) + fabs(m_y_vel))> m_speed){
-        m_x_vel *= 0.71; // 1/sqrt(2)
-        m_y_vel *= 0.71;
-    }
+    m_colorR = 255;
+    m_colorG = 0;
+    m_colorB = 0;
+    m_colorA = 255;
 }
