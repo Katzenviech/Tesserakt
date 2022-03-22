@@ -19,5 +19,6 @@ private:
     int m_bulletspeed;
     float m_timeSinceLastFrame = 0.f;
     float m_timeBetweenShots;
+    void destroyBulletsOutOfScreen(std::vector<Bullet>& bullets);
 
 };

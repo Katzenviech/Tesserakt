@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cmath>
 #include "Game.h"
 
 Game::Game(int bulletspeed, int time_between_shots_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms*0.001f} {}
@@ -43,6 +45,12 @@ void Game::run(Controller &controller, Renderer &renderer, Player &player, std::
 
         m_timeSinceLastFrame = float(SDL_GetTicks() - frame_start) * 0.001; //s
     }
+}
+
+void Game::destroyBulletsOutOfScreen(std::vector<Bullet>& bullets){
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& b){
+        return (int)fabs(b.getX()) > b.getWidth() || (int)fabs(b.getY()) > b.getHeight();
+    }));
 }
 
 void Game::update(Controller &controller, Player &player, std::vector<Bullet> &bullets)
@@ -96,4 +104,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
         player.setY(0);
     if (player.getY() >= (player.getHeight() - player.getSize()))
         player.setY(player.getHeight() - player.getSize());
+
+    if(bullets.size() > 0)
+        destroyBulletsOutOfScreen(bullets);
 }
