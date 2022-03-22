@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
 	constexpr int FPS           =          75;
 	constexpr int SPEED         =         600; // pixel/s
 	constexpr int BULLETSPEED   =        1000; // pixel/s
-	constexpr int TIMEBETWSHOTS =         200; //ms
+	constexpr int TIMEBETWSHOTS =         150; //ms
 	constexpr int MSPERFRAME    =  (1000/FPS);
 
 	Renderer renderer(WIDTH, HEIGHT, SIZE);

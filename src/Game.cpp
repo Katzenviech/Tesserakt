@@ -72,15 +72,15 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
         {
             bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
-        if (controller.get_fire_right_pressed())
+        else if (controller.get_fire_right_pressed())
         {
             bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2,  1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
-        if (controller.get_fire_up_pressed())
+        else if (controller.get_fire_up_pressed())
         {
             bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
-        if (controller.get_fire_down_pressed())
+        else if (controller.get_fire_down_pressed())
         {
             bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(),  1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
@@ -99,7 +99,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
     player.normalizeSpeed();
 
-    player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame); // TODO: Must depend on FPS
+    player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame);
     player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
     // Boundary
     if (player.getX() <= 0)
