@@ -46,15 +46,24 @@ Renderer::~Renderer()
     SDL_Quit();
 }
 
-void Renderer::render(const Player& player)
+void Renderer::render(const Player& player, const std::vector<Bullet>& bullets)
 {
+    SDL_Rect sdl_rect;
+
     /* Clear screen */
     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(sdl_renderer);
 
-    SDL_Rect sdl_rect {(int)player.getX(), (int)player.getY(), player.getSize(), player.getSize()};
-    
-    /* Draw the rectangle */
+    /* Draw the bullets */
+    for(size_t i=0; i<bullets.size(); ++i){
+        SDL_SetRenderDrawColor(sdl_renderer, bullets[i].getColorR(), bullets[i].getColorG(), bullets[i].getColorB(), bullets[i].getColorA());
+        sdl_rect = {(int)bullets[i].getX(), (int)bullets[i].getY(), bullets[i].getSize(), bullets[i].getSize()};
+        SDL_RenderFillRect(sdl_renderer, &sdl_rect);
+    }
+
+
+    /* Draw the player */
+    sdl_rect = {(int)player.getX(), (int)player.getY(), player.getSize(), player.getSize()};
     SDL_SetRenderDrawColor(sdl_renderer, player.getColorR(), player.getColorG(), player.getColorB(), player.getColorA());
     SDL_RenderFillRect(sdl_renderer, &sdl_rect);
     /* Draw to window and loop */

@@ -1,6 +1,6 @@
 #include "Game.h"
 
-void Game::run(Controller& controller, Renderer& renderer, Player& player, int target_frame_duration)
+void Game::run(Controller& controller, Renderer& renderer, Player& player, std::vector<Bullet>& bullets, int target_frame_duration)
 {
     int title_timestamp = SDL_GetTicks();
     int frame_start;
@@ -14,8 +14,8 @@ void Game::run(Controller& controller, Renderer& renderer, Player& player, int t
 
         // Input, Update, Render - the main game loop.
         controller.HandleInput(m_running, player);
-        update(controller, player, target_frame_duration);
-        renderer.render(player);
+        update(controller, player, bullets, target_frame_duration);
+        renderer.render(player, bullets);
 
         frame_end = SDL_GetTicks();
 
@@ -41,14 +41,18 @@ void Game::run(Controller& controller, Renderer& renderer, Player& player, int t
     }
 }
 
-void Game::update(Controller& controller, Player& player, int target_frame_duration)
+void Game::update(Controller& controller, Player& player, std::vector<Bullet>& bullets, int target_frame_duration)
 {
+    // Fill vector with bullets
+    if(controller.get_fire_pressed()){
+        bullets.emplace_back(player.getX(), player.getY(), 0.f, 0.f, 0, 1000, 1000, 10);
+    }
 
     // Move the player
     player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
     player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
     player.normalizeSpeed();
-    
+
     player.setX(player.getX() + player.getXVel() / 60); // TODO: Must depend on FPS
     player.setY(player.getY() + player.getYVel() / 60);
     // Boundary 

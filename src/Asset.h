@@ -13,7 +13,7 @@ public:
         );
 
     virtual ~Asset() = default;
-    
+
     // Getter
     float getX() const;
     float getY() const;
@@ -47,6 +47,7 @@ protected:
     int m_width;
     int m_height;
     int m_size;
+
     int m_colorR = 0;
     int m_colorG = 0;
     int m_colorB = 0;

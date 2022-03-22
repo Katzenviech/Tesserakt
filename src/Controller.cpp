@@ -29,6 +29,9 @@ void Controller::HandleInput(bool &running, Player &player)
             case SDL_SCANCODE_RIGHT:
                 m_right_pressed = true;
                 break;
+            case SDL_SCANCODE_SPACE:
+                m_fire_pressed = true;
+                break;
             default:
                 break;
             }
@@ -51,6 +54,9 @@ void Controller::HandleInput(bool &running, Player &player)
             case SDL_SCANCODE_D:
             case SDL_SCANCODE_RIGHT:
                 m_right_pressed = false;
+                break;
+            case SDL_SCANCODE_SPACE:
+                m_fire_pressed = false;
                 break;
             default:
                 break;
@@ -82,4 +88,9 @@ bool Controller::get_up_pressed() const
 bool Controller::get_down_pressed() const
 {
     return m_down_pressed;
+}
+
+bool Controller::get_fire_pressed() const
+{
+    return m_fire_pressed;
 }
