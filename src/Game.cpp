@@ -14,7 +14,7 @@ void Game::run(Controller& controller, Renderer& renderer, Player& player, std::
 
         // Input, Update, Render - the main game loop.
         controller.HandleInput(m_running, player);
-        update(controller, player, bullets, target_frame_duration);
+        update(controller, player, bullets);
         renderer.render(player, bullets);
 
         frame_end = SDL_GetTicks();
@@ -38,14 +38,23 @@ void Game::run(Controller& controller, Renderer& renderer, Player& player, std::
         {
             SDL_Delay(target_frame_duration - frame_duration);
         }
+
+        m_timeSinceLastFrame = float(SDL_GetTicks() - frame_start) * 0.001; //s
     }
 }
 
-void Game::update(Controller& controller, Player& player, std::vector<Bullet>& bullets, int target_frame_duration)
+void Game::update(Controller& controller, Player& player, std::vector<Bullet>& bullets)
 {
     // Fill vector with bullets
     if(controller.get_fire_pressed()){
-        bullets.emplace_back(player.getX(), player.getY(), 0.f, 0.f, 0, 1000, 1000, 10);
+        bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1000.f, 0.f, 0, 10000, 10000, 5);
+    }
+    
+    // Move bullets
+    for(Bullet& b : bullets){
+        b.setX(b.getX() + b.getXVel() * m_timeSinceLastFrame);
+        b.setY(b.getY() + b.getYVel() * m_timeSinceLastFrame);
+
     }
 
     // Move the player
@@ -53,8 +62,8 @@ void Game::update(Controller& controller, Player& player, std::vector<Bullet>& b
     player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
     player.normalizeSpeed();
 
-    player.setX(player.getX() + player.getXVel() / 60); // TODO: Must depend on FPS
-    player.setY(player.getY() + player.getYVel() / 60);
+    player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame); // TODO: Must depend on FPS
+    player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
     // Boundary 
     if (player.getX() <= 0)
         player.setX(0);

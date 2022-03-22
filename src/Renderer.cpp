@@ -55,9 +55,9 @@ void Renderer::render(const Player& player, const std::vector<Bullet>& bullets)
     SDL_RenderClear(sdl_renderer);
 
     /* Draw the bullets */
-    for(size_t i=0; i<bullets.size(); ++i){
-        SDL_SetRenderDrawColor(sdl_renderer, bullets[i].getColorR(), bullets[i].getColorG(), bullets[i].getColorB(), bullets[i].getColorA());
-        sdl_rect = {(int)bullets[i].getX(), (int)bullets[i].getY(), bullets[i].getSize(), bullets[i].getSize()};
+    for(const Bullet& b : bullets){
+        SDL_SetRenderDrawColor(sdl_renderer, b.getColorR(), b.getColorG(), b.getColorB(), b.getColorA());
+        sdl_rect = {(int)b.getX(), (int)b.getY(), b.getSize(), b.getSize()};
         SDL_RenderFillRect(sdl_renderer, &sdl_rect);
     }
 

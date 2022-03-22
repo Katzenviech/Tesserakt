@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 	constexpr int HEIGHT     =         600;
 	constexpr int SIZE       =          30;
 	constexpr int FPS        =          60;
-	constexpr int SPEED      = (36000/FPS);
+	constexpr int SPEED      =         600; // pixel/s
 	constexpr int MSPERFRAME =  (1000/FPS);
 
 	Renderer renderer(WIDTH, HEIGHT, SIZE);
