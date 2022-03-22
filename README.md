@@ -1,5 +1,7 @@
 # Tesserakt
 
+Build Status: ![Build Status](https://github.com/Katzenviech/Tesserakt/workflows/build/badge.svg)
+
 ## prerequisite to compile with MinGW64 on Windows
 Download MinGW64 e.g. from https://github.com/brechtsanders/winlibs_mingw or https://winlibs.com/ and extract e.g. to C:\MINGW64
 
@@ -17,15 +19,22 @@ e.g. C:/SDL2 (there should be a lib, include and bin folder in this directory) -
 
 
 ## build using CMake
-inside cloned source folder:
+inside cloned folder with CMakeLists.txt:
+
 On Linux:
-cmake -Bbuild -S.
+```
+    cmake -Bbuild -S.
+```
 
 On Windows:
-cmake -G"MinGW Makefiles" -Bbulid -S.
+```
+    cmake -G"MinGW Makefiles" -Bbuild -S.
+```
 
 then
-cmake --build build
+```
+    cmake --build build
+```
 
 ## run
 On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add this directory to your System PATH
