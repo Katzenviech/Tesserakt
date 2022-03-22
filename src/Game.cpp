@@ -47,9 +47,11 @@ void Game::update(Controller& controller, Player& player, int target_frame_durat
     // Move the player
     player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
     player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
+    player.normalizeSpeed();
     
     player.setX(player.getX() + player.getXVel() / 60); // TODO: Must depend on FPS
     player.setY(player.getY() + player.getYVel() / 60);
+    // Boundary 
     if (player.getX() <= 0)
         player.setX(0);
     if (player.getX() >= (player.getWidth() - player.getSize()))

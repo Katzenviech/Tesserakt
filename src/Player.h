@@ -33,6 +33,8 @@ public:
     void setY(float y);
     void setXVel(float x_vel);
     void setYVel(float y_vel);
+
+    void normalizeSpeed();
     
 private:
     float m_x_pos;

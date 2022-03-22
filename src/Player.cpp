@@ -1,5 +1,7 @@
+#include <cmath>
 #include "Player.h"
 
+BREAK BUILD
 Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int width, int height, int size) : m_x_pos{x_pos},
                                             m_y_pos{y_pos},
                                             m_x_vel{x_vel},
@@ -87,4 +89,11 @@ int Player::getColorB() const
 int Player::getColorA() const
 {
     return m_colorA;
+}
+
+void Player::normalizeSpeed(){
+    if((fabs(m_x_vel) + fabs(m_y_vel))> m_speed){
+        m_x_vel *= 0.71; // 1/sqrt(2)
+        m_y_vel *= 0.71;
+    }
 }

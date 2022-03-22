@@ -27,7 +27,7 @@ Renderer::Renderer(int screen_width, int screen_height, int rect_size)
     }
 
     /* Create a renderer */
-    Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+    int32_t render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     sdl_renderer = SDL_CreateRenderer(sdl_window, -1, render_flags);
     if (nullptr == sdl_renderer)
     {
