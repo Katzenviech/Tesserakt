@@ -13,24 +13,32 @@ void Controller::HandleInput(bool &running, Player &player)
         case SDL_KEYDOWN:
             switch (m_event.key.keysym.scancode)
             {
+            case SDL_SCANCODE_ESCAPE:
+                running = false;
+                break;
             case SDL_SCANCODE_UP:
+                m_fire_up_pressed = true;
+                break;
             case SDL_SCANCODE_W:
                 m_up_pressed = true;
                 break;
             case SDL_SCANCODE_DOWN:
+                m_fire_down_pressed = true;
+                break;
             case SDL_SCANCODE_S:
                 m_down_pressed = true;
                 break;
-            case SDL_SCANCODE_A:
             case SDL_SCANCODE_LEFT:
+                m_fire_left_pressed = true;
+                break;
+            case SDL_SCANCODE_A:
                 m_left_pressed = true;
                 break;
-            case SDL_SCANCODE_D:
             case SDL_SCANCODE_RIGHT:
-                m_right_pressed = true;
+                m_fire_right_pressed = true;
                 break;
-            case SDL_SCANCODE_SPACE:
-                m_fire_pressed = true;
+            case SDL_SCANCODE_D:
+                m_right_pressed = true;
                 break;
             default:
                 break;
@@ -40,23 +48,28 @@ void Controller::HandleInput(bool &running, Player &player)
             switch (m_event.key.keysym.scancode)
             {
             case SDL_SCANCODE_UP:
+                m_fire_up_pressed = false;
+                break;
             case SDL_SCANCODE_W:
                 m_up_pressed = false;
                 break;
             case SDL_SCANCODE_DOWN:
+                m_fire_down_pressed = false;
+                break;
             case SDL_SCANCODE_S:
                 m_down_pressed = false;
                 break;
-            case SDL_SCANCODE_A:
             case SDL_SCANCODE_LEFT:
+                m_fire_left_pressed = false;
+                break;
+            case SDL_SCANCODE_A:
                 m_left_pressed = false;
                 break;
-            case SDL_SCANCODE_D:
             case SDL_SCANCODE_RIGHT:
-                m_right_pressed = false;
+                m_fire_right_pressed = false;
                 break;
-            case SDL_SCANCODE_SPACE:
-                m_fire_pressed = false;
+            case SDL_SCANCODE_D:
+                m_right_pressed = false;
                 break;
             default:
                 break;
@@ -67,8 +80,6 @@ void Controller::HandleInput(bool &running, Player &player)
         }
     }
 }
-
-
 
 bool Controller::get_right_pressed() const
 {
@@ -90,7 +101,22 @@ bool Controller::get_down_pressed() const
     return m_down_pressed;
 }
 
-bool Controller::get_fire_pressed() const
+bool Controller::get_fire_left_pressed() const
 {
-    return m_fire_pressed;
+    return m_fire_left_pressed;
+}
+
+bool Controller::get_fire_right_pressed() const
+{
+    return m_fire_right_pressed;
+}
+
+bool Controller::get_fire_up_pressed() const
+{
+    return m_fire_up_pressed;
+}
+
+bool Controller::get_fire_down_pressed() const
+{
+    return m_fire_down_pressed;
 }

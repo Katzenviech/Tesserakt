@@ -1,6 +1,8 @@
 #include "Game.h"
 
-void Game::run(Controller& controller, Renderer& renderer, Player& player, std::vector<Bullet>& bullets, int target_frame_duration)
+Game::Game(int bulletspeed, int time_between_shots_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms*0.001f} {}
+
+void Game::run(Controller &controller, Renderer &renderer, Player &player, std::vector<Bullet> &bullets, int target_frame_duration)
 {
     int title_timestamp = SDL_GetTicks();
     int frame_start;
@@ -43,18 +45,39 @@ void Game::run(Controller& controller, Renderer& renderer, Player& player, std::
     }
 }
 
-void Game::update(Controller& controller, Player& player, std::vector<Bullet>& bullets)
+void Game::update(Controller &controller, Player &player, std::vector<Bullet> &bullets)
 {
-    // Fill vector with bullets
-    if(controller.get_fire_pressed()){
-        bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1000.f, 0.f, 0, 10000, 10000, 5);
+
+    player.setTimeSinceLastShot(player.getTimeSinceLastShot() + m_timeSinceLastFrame);
+
+    if (player.getTimeSinceLastShot() >= m_timeBetweenShots)
+    {
+        player.setTimeSinceLastShot(0.f);
+        // Fill vector with bullets
+        if (controller.get_fire_left_pressed())
+        {
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, 10000, 10000, 5);
+        }
+        if (controller.get_fire_right_pressed())
+        {
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, 1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, 10000, 10000, 5);
+        }
+        if (controller.get_fire_up_pressed())
+        {
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, 10000, 10000, 5);
+        }
+        if (controller.get_fire_down_pressed())
+        {
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), 1.f * m_bulletspeed + player.getYVel(), 0, 10000, 10000, 5);
+        }
+
     }
-    
+
     // Move bullets
-    for(Bullet& b : bullets){
+    for (Bullet &b : bullets)
+    {
         b.setX(b.getX() + b.getXVel() * m_timeSinceLastFrame);
         b.setY(b.getY() + b.getYVel() * m_timeSinceLastFrame);
-
     }
 
     // Move the player
@@ -64,7 +87,7 @@ void Game::update(Controller& controller, Player& player, std::vector<Bullet>& b
 
     player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame); // TODO: Must depend on FPS
     player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
-    // Boundary 
+    // Boundary
     if (player.getX() <= 0)
         player.setX(0);
     if (player.getX() >= (player.getWidth() - player.getSize()))
