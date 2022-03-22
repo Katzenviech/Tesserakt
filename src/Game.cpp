@@ -48,35 +48,41 @@ void Game::run(Controller &controller, Renderer &renderer, Player &player, std::
 }
 
 void Game::destroyBulletsOutOfScreen(std::vector<Bullet>& bullets){
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& b){
-        return (int)fabs(b.getX()) > b.getWidth() || (int)fabs(b.getY()) > b.getHeight();
-    }));
+    // remove bullets if they are OUTOFBOUNDS
+    auto new_end = std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& b){
+        return (int)b.getX() >  b.getWidth()  || 
+               (int)b.getY() >  b.getHeight() ||
+               (int)b.getX() < -b.getWidth()  ||
+               (int)b.getY() < -b.getHeight() ;
+
+    });
+    bullets.erase(new_end, bullets.end());
 }
 
 void Game::update(Controller &controller, Player &player, std::vector<Bullet> &bullets)
 {
-
+    // Fill vector with bullets
+    constexpr int OUTOFBOUNDS = 10000; // pixels
     player.setTimeSinceLastShot(player.getTimeSinceLastShot() + m_timeSinceLastFrame);
 
     if (player.getTimeSinceLastShot() >= m_timeBetweenShots)
     {
         player.setTimeSinceLastShot(0.f);
-        // Fill vector with bullets
         if (controller.get_fire_left_pressed())
         {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, 10000, 10000, 5);
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
         if (controller.get_fire_right_pressed())
         {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, 1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, 10000, 10000, 5);
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2,  1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
         if (controller.get_fire_up_pressed())
         {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, 10000, 10000, 5);
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
         if (controller.get_fire_down_pressed())
         {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), 1.f * m_bulletspeed + player.getYVel(), 0, 10000, 10000, 5);
+            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(),  1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
         }
 
     }
@@ -105,6 +111,5 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     if (player.getY() >= (player.getHeight() - player.getSize()))
         player.setY(player.getHeight() - player.getSize());
 
-    if(bullets.size() > 0)
-        destroyBulletsOutOfScreen(bullets);
+    destroyBulletsOutOfScreen(bullets);
 }
