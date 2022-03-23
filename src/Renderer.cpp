@@ -46,7 +46,7 @@ Renderer::~Renderer()
     SDL_Quit();
 }
 
-void Renderer::render(const Player& player, const std::vector<Bullet>& bullets)
+void Renderer::render(const Player& player, const std::vector<Bullet>& bullets, const std::vector<Enemy>& enemies)
 {
     SDL_Rect sdl_rect;
 
@@ -66,6 +66,14 @@ void Renderer::render(const Player& player, const std::vector<Bullet>& bullets)
     sdl_rect = {(int)player.getX(), (int)player.getY(), player.getSize(), player.getSize()};
     SDL_SetRenderDrawColor(sdl_renderer, player.getColorR(), player.getColorG(), player.getColorB(), player.getColorA());
     SDL_RenderFillRect(sdl_renderer, &sdl_rect);
+    
+    /* Draw the enemies */
+    for(const Enemy& e : enemies){
+        sdl_rect = {(int)e.getX(), (int)e.getY(), e.getSize(), e.getSize()};
+        SDL_SetRenderDrawColor(sdl_renderer, e.getColorR(), e.getColorG(), e.getColorB(), e.getColorA());
+        SDL_RenderFillRect(sdl_renderer, &sdl_rect);
+    }
+
     /* Draw to window and loop */
     SDL_RenderPresent(sdl_renderer);
 

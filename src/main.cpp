@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "Game.h"
 #include "Bullet.h"
+#include "Enemy.h"
 
 int main(int argc, char* argv[]){
 	
@@ -15,16 +16,18 @@ int main(int argc, char* argv[]){
 	constexpr int SPEED         =         600; // pixel/s
 	constexpr int BULLETSPEED   =        1000; // pixel/s
 	constexpr int TIMEBETWSHOTS =         150; //ms
+	constexpr int ENEMYMOVEPCT  =          50; //move speed enemy in % of player speed
 	constexpr int MSPERFRAME    =  (1000/FPS);
 
 	Renderer renderer(WIDTH, HEIGHT, SIZE);
 	Player player((WIDTH-SIZE)/2.0f, (HEIGHT-SIZE)/2.0f, 0.f, 0.f, SPEED, WIDTH, HEIGHT, SIZE);
 	std::vector<Bullet> bullets;
+	std::vector<Enemy> enemies;
 	Controller controller;
-	Game game(BULLETSPEED, TIMEBETWSHOTS);
+	Game game(BULLETSPEED, TIMEBETWSHOTS, ENEMYMOVEPCT);
 
 	/* Main loop */
-	game.run(controller, renderer, player, bullets, MSPERFRAME);
+	game.run(controller, renderer, player, bullets, enemies, MSPERFRAME);
 
 	return 0;
 }

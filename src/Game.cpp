@@ -2,9 +2,9 @@
 #include <cmath>
 #include "Game.h"
 
-Game::Game(int bulletspeed, int time_between_shots_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms*0.001f} {}
+Game::Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms*0.001f}, m_enemy_move_speed {enemy_move_speed_percent*0.01f} {}
 
-void Game::run(Controller &controller, Renderer &renderer, Player &player, std::vector<Bullet> &bullets, int target_frame_duration)
+void Game::run(Controller &controller, Renderer &renderer, Player &player, std::vector<Bullet> &bullets, std::vector<Enemy> enemies, int target_frame_duration)
 {
     int title_timestamp = SDL_GetTicks();
     int frame_start;
@@ -12,14 +12,17 @@ void Game::run(Controller &controller, Renderer &renderer, Player &player, std::
     int frame_duration;
     int frame_count = 0;
 
+    enemies.emplace_back(200.f,150.f,0.f,0.f, player.getSpeed() * m_enemy_move_speed, player.getWidth(), player.getHeight(), player.getSize());
+    enemies.emplace_back(500.f,450.f,0.f,0.f, player.getSpeed() * m_enemy_move_speed, player.getWidth(), player.getHeight(), player.getSize());
+
     while (m_running)
     {
         frame_start = SDL_GetTicks();
 
         // Input, Update, Render - the main game loop.
         controller.HandleInput(m_running, player);
-        update(controller, player, bullets);
-        renderer.render(player, bullets);
+        update(controller, player, bullets, enemies);
+        renderer.render(player, bullets, enemies);
 
         frame_end = SDL_GetTicks();
 
@@ -59,9 +62,9 @@ void Game::destroyBulletsOutOfScreen(std::vector<Bullet>& bullets){
     bullets.erase(new_end, bullets.end());
 }
 
-void Game::update(Controller &controller, Player &player, std::vector<Bullet> &bullets)
+void Game::update(Controller &controller, Player &player, std::vector<Bullet> &bullets, std::vector<Enemy>& enemies)
 {
-    // Fill vector with bullets
+    // Shoot - Fill vector with bullets
     constexpr int OUTOFBOUNDS = 10000; // pixels
     player.setTimeSinceLastShot(player.getTimeSinceLastShot() + m_timeSinceLastFrame);
 
@@ -93,6 +96,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
         b.setX(b.getX() + b.getXVel() * m_timeSinceLastFrame);
         b.setY(b.getY() + b.getYVel() * m_timeSinceLastFrame);
     }
+    destroyBulletsOutOfScreen(bullets);
 
     // Move the player
     player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
@@ -111,5 +115,12 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     if (player.getY() >= (player.getHeight() - player.getSize()))
         player.setY(player.getHeight() - player.getSize());
 
-    destroyBulletsOutOfScreen(bullets);
+    // Move enemies
+    for(Enemy& e: enemies){
+        e.seekTarget(player);
+        e.setX(e.getX() + e.getXVel() * m_timeSinceLastFrame);
+        e.setY(e.getY() + e.getYVel() * m_timeSinceLastFrame);
+    }
+    
+
 }
