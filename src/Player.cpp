@@ -9,10 +9,22 @@ Player::Player(float x_pos, float y_pos, float x_vel, float y_vel, int speed, in
     m_colorA = 255;
 }
 
-float Player::getTimeSinceLastShot() const{
+float Player::getTimeSinceLastShot() const
+{
     return m_timeSinceLastShot;
 }
 
-void Player::setTimeSinceLastShot(float time){
+void Player::setTimeSinceLastShot(float time)
+{
     m_timeSinceLastShot = time;
+}
+
+bool Player::isAlive() const
+{
+    return m_alive;
+}
+
+void Player::setDead()
+{
+    m_alive = false;
 }

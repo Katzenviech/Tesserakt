@@ -9,7 +9,10 @@ public:
 
     float getTimeSinceLastShot() const;
     void setTimeSinceLastShot(float time);
+    bool isAlive() const;
+    void setDead();
 
 private:
     float m_timeSinceLastShot = 0.f;
+    bool m_alive = true;
 };

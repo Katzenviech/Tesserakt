@@ -3,8 +3,9 @@
 #include "Game.h"
 #include "Enemy.h"
 
-Game::Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms * 0.001f}, m_enemy_move_speed{enemy_move_speed_percent * 0.01f} {
-    Enemy::m_stunTime_s = stun_time_ms*0.001;
+Game::Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms * 0.001f}, m_enemy_move_speed{enemy_move_speed_percent * 0.01f}
+{
+    Enemy::m_stunTime_s = stun_time_ms * 0.001;
 }
 
 void Game::run(Controller &controller, Renderer &renderer, Player &player, std::vector<Bullet> &bullets, std::vector<Enemy> enemies, int target_frame_duration)
@@ -70,43 +71,40 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
 {
     // Shoot - Fill vector with bullets
     constexpr int OUTOFBOUNDS = 10000; // pixels
+    constexpr int BULLETSIZE = 8;
     player.setTimeSinceLastShot(player.getTimeSinceLastShot() + m_timeSinceLastFrame);
-
-    if (player.getTimeSinceLastShot() >= m_timeBetweenShots)
+    if (player.isAlive())
     {
-        player.setTimeSinceLastShot(0.f);
-        if (controller.get_fire_left_pressed())
+        if (player.getTimeSinceLastShot() >= m_timeBetweenShots)
         {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
+            player.setTimeSinceLastShot(0.f);
+            if (controller.get_fire_left_pressed())
+            {
+                bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, -1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, BULLETSIZE);
+            }
+            else if (controller.get_fire_right_pressed())
+            {
+                bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, 1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, BULLETSIZE);
+            }
+            else if (controller.get_fire_up_pressed())
+            {
+                bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, BULLETSIZE);
+            }
+            else if (controller.get_fire_down_pressed())
+            {
+                bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), 1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, BULLETSIZE);
+            }
         }
-        else if (controller.get_fire_right_pressed())
-        {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, 1.f * m_bulletspeed + player.getXVel(), player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
-        }
-        else if (controller.get_fire_up_pressed())
-        {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), -1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
-        }
-        else if (controller.get_fire_down_pressed())
-        {
-            bullets.emplace_back(player.getX() + player.getSize() / 2, player.getY() + player.getSize() / 2, player.getXVel(), 1.f * m_bulletspeed + player.getYVel(), 0, OUTOFBOUNDS, OUTOFBOUNDS, 5);
-        }
+
+        // Move the player
+        player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
+        player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
+        player.normalizeSpeed();
+
+        player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame);
+        player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
     }
-
-    // Move bullets
-    for (Bullet &b : bullets)
-    {
-        b.setX(b.getX() + b.getXVel() * m_timeSinceLastFrame);
-        b.setY(b.getY() + b.getYVel() * m_timeSinceLastFrame);
-    }
-
-    // Move the player
-    player.setXVel((controller.get_right_pressed() - controller.get_left_pressed()) * player.getSpeed());
-    player.setYVel((controller.get_down_pressed() - controller.get_up_pressed()) * player.getSpeed());
-    player.normalizeSpeed();
-
-    player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame);
-    player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
+    
     // Boundary
     if (player.getX() <= 0)
         player.setX(0);
@@ -117,17 +115,29 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     if (player.getY() >= (player.getHeight() - player.getSize()))
         player.setY(player.getHeight() - player.getSize());
 
+    // Move bullets
+    for (Bullet &b : bullets)
+    {
+        b.setX(b.getX() + b.getXVel() * m_timeSinceLastFrame);
+        b.setY(b.getY() + b.getYVel() * m_timeSinceLastFrame);
+    }
+
     // Move enemies
     for (Enemy &e : enemies)
     {
+        // move
         e.seekTarget(player, m_timeSinceLastFrame);
         e.setX(e.getX() + e.getXVel() * m_timeSinceLastFrame);
         e.setY(e.getY() + e.getYVel() * m_timeSinceLastFrame);
+        // hit
         if (e.stun(bullets))
         {
             // remove bullet if enemy was hit
             destroyBulletsOutOfScreen(bullets);
         }
+
+        if (e.checkCollision(player))
+            player.setDead();
     }
     // remove bullet out of window
     destroyBulletsOutOfScreen(bullets);

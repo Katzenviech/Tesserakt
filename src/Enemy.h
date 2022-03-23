@@ -19,6 +19,8 @@ public:
 
     static float m_stunTime_s;
 
+    int getColorA() const;
+
 private:
     float m_timeSinceStunned = 0.f;
 

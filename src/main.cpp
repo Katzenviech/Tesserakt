@@ -13,8 +13,8 @@ int main(int argc, char* argv[]){
 	constexpr int HEIGHT        =         600; // pixel
 	constexpr int SIZE          =          30; // pixel
 	constexpr int FPS           =          75; // frames per second
-	constexpr int SPEED         =         600; // pixel/s
-	constexpr int BULLETSPEED   =        1000; // pixel/s
+	constexpr int SPEED         =         500; // pixel/s
+	constexpr int BULLETSPEED   =         800; // pixel/s
 	constexpr int TIMEBETWSHOTS =         150; // ms
 	constexpr int ENEMYMOVEPCT  =          25; // move speed enemy in % of player speed
 	constexpr int MSPERFRAME    =  (1000/FPS); // ms per frame

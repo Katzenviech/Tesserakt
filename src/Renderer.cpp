@@ -35,6 +35,7 @@ Renderer::Renderer(int screen_width, int screen_height, int rect_size)
         SDL_DestroyWindow(sdl_window);
         SDL_Quit();
     }
+    SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
 
 }
 

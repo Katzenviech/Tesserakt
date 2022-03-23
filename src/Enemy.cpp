@@ -63,3 +63,10 @@ bool Enemy::stun(std::vector<Bullet> &bullets)
 }
 
 float Enemy::m_stunTime_s = 2.0;
+
+int Enemy::getColorA() const{
+    int blend = (int)((m_timeSinceStunned)/m_stunTime_s*150.0) -150 + 255;
+    if (m_timeSinceStunned < m_stunTime_s) 
+        return blend > 255 ? 255 : blend;
+    return 255;
+}

@@ -37,6 +37,8 @@ public:
 
     void normalizeSpeed();
 
+    bool checkCollision(const Asset& other);
+    
 protected:
     float m_x_pos;
     float m_y_pos;
@@ -53,6 +55,5 @@ protected:
     int m_colorB = 0;
     int m_colorA = 255;
 
-    bool checkCollision(const Asset& other);
-    
+
 };
