@@ -2,13 +2,13 @@
 #include <cmath>
 
 Asset::Asset(float x_pos, float y_pos, float x_vel, float y_vel, int speed, int width, int height, int size) : m_x_pos{x_pos},
-                                                                                                                 m_y_pos{y_pos},
-                                                                                                                 m_x_vel{x_vel},
-                                                                                                                 m_y_vel{y_vel},
-                                                                                                                 m_speed{speed},
-                                                                                                                 m_width{width},
-                                                                                                                 m_height{height},
-                                                                                                                 m_size{size}{}
+                                                                                                               m_y_pos{y_pos},
+                                                                                                               m_x_vel{x_vel},
+                                                                                                               m_y_vel{y_vel},
+                                                                                                               m_speed{speed},
+                                                                                                               m_width{width},
+                                                                                                               m_height{height},
+                                                                                                               m_size{size} {}
 
 float Asset::getX() const
 {
@@ -97,4 +97,12 @@ void Asset::normalizeSpeed()
         m_x_vel *= 0.71; // 1/sqrt(2)
         m_y_vel *= 0.71;
     }
+}
+
+bool Asset::checkCollision(const Asset &other)
+{
+    return (((other.getX() - this->getX()) < this->getSize()) &&
+            ((this->getX() - other.getX()) < other.getSize())) &&
+           (((other.getY() - this->getY()) < this->getSize()) &&
+            ((this->getY() - other.getY()) < other.getSize()));
 }

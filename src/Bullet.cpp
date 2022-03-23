@@ -8,3 +8,11 @@ Asset(x_pos - size /2, y_pos - size/2, x_vel, y_vel, speed, width, height, size)
     m_colorB = 0;
     m_colorA = 255;
 }
+
+void Bullet::setHit(){
+   m_hit = true; 
+}
+
+bool Bullet::isHit() const {
+    return m_hit;
+}

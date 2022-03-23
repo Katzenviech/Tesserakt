@@ -11,7 +11,7 @@
 class Game {
 
 public:
-    Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent);
+    Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms);
     void run(Controller& controller, Renderer& renderer, Player& player, std::vector<Bullet>& bullets, std::vector<Enemy> enemies, int target_frame_duration);
 
 private:
@@ -22,4 +22,5 @@ private:
     float m_timeBetweenShots;
     void destroyBulletsOutOfScreen(std::vector<Bullet>& bullets);
     float m_enemy_move_speed;
+    int m_score = 0;
 };

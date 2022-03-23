@@ -53,4 +53,6 @@ protected:
     int m_colorB = 0;
     int m_colorA = 255;
 
+    bool checkCollision(const Asset& other);
+    
 };
