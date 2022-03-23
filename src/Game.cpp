@@ -104,7 +104,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
         player.setX(player.getX() + player.getXVel() * m_timeSinceLastFrame);
         player.setY(player.getY() + player.getYVel() * m_timeSinceLastFrame);
     }
-    
+
     // Boundary
     if (player.getX() <= 0)
         player.setX(0);
@@ -126,7 +126,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     for (Enemy &e : enemies)
     {
         // move
-        e.seekTarget(player, m_timeSinceLastFrame);
+        e.update(player, m_timeSinceLastFrame);
         e.setX(e.getX() + e.getXVel() * m_timeSinceLastFrame);
         e.setY(e.getY() + e.getYVel() * m_timeSinceLastFrame);
         // hit
@@ -136,7 +136,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
             destroyBulletsOutOfScreen(bullets);
         }
 
-        if (e.checkCollision(player))
+        if (!e.isStunned() && e.checkCollision(player))
             player.setDead();
     }
     // remove bullet out of window
