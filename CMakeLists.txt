@@ -17,4 +17,10 @@ include_directories(${SDL2_INCLUDE_DIR} src)
 
 add_executable(Tesserakt ${SOURCES})
 
+if (WIN32)
 target_link_libraries(Tesserakt ${SDL2_LIBRARY} -static gcc stdc++ winpthread -dynamic)
+endif (WIN32)
+
+if (UNIX)
+target_link_libraries(Tesserakt ${SDL2_LIBRARY})
+endif (UNIX)
