@@ -41,9 +41,9 @@ On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add 
 
 
 ## gameplay
-WASD - move
-ARROW - shoot
-Run Away!
+WASD - move  
+ARROW - shoot  
+Run Away!  
 
 
 ----
