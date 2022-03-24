@@ -38,3 +38,14 @@ then
 
 ## run
 On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add this directory to your System PATH
+
+
+## gameplay
+WASD - move
+ARROW - shoot
+Run Away!
+
+
+----
+inspired by:
+Tesserakt in Java https://www.youtube.com/watch?v=c3EZUMRyMkY
