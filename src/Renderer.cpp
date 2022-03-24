@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Renderer.h"
 
 Renderer::Renderer(int screen_width, int screen_height, int rect_size)
@@ -80,6 +81,7 @@ void Renderer::render(const Player& player, const std::vector<Bullet>& bullets, 
 
 }
 
-void Renderer::updateWindowTitle(){
-    return;
+void Renderer::updateWindowTitle(int score){
+    std::string title{"TESSERAKT!    Score: " + std::to_string(score)};
+    SDL_SetWindowTitle(sdl_window, title.c_str());
 }

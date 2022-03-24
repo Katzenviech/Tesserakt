@@ -14,7 +14,7 @@ public:
     virtual ~Renderer();
 
     void render(const Player& player, const std::vector<Bullet>& bullets, const std::vector<Enemy>& enemies);
-    void updateWindowTitle();
+    void updateWindowTitle(int score);
 
 private:
   SDL_Window* sdl_window;

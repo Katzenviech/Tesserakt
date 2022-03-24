@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 	std::vector<Bullet> bullets;
 	std::vector<Enemy> enemies;
 	Controller controller;
-	Game game(BULLETSPEED, TIMEBETWSHOTS, ENEMYMOVEPCT, STUNTIMEMS);
+	Game game(BULLETSPEED, TIMEBETWSHOTS, ENEMYMOVEPCT, STUNTIMEMS, WIDTH, HEIGHT, SIZE);
 
 	/* Main loop */
 	game.run(controller, renderer, player, bullets, enemies, MSPERFRAME);

@@ -38,6 +38,7 @@ void Enemy::update(const Asset &target, float timeSinceLastFrame)
     m_y_vel = m_speed * delta_y;
 
     // increase speed
+    // TODO: Make speed increase constexpr in main
     m_speed = m_speed + (int)(0.05*m_Alive_s);
 }
 

@@ -3,7 +3,9 @@
 #include "Game.h"
 #include "Enemy.h"
 
-Game::Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms) : m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms * 0.001f}, m_enemy_move_speed{enemy_move_speed_percent * 0.01f}
+Game::Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms, int width, int height, int size) 
+: m_bulletspeed{bulletspeed}, m_timeBetweenShots{time_between_shots_ms * 0.001f}, m_enemy_move_speed{enemy_move_speed_percent * 0.01f},
+      m_engine{ m_dev() }, m_random_w {0, width - size - 1}, m_random_h {0, height - size -1}
 {
     Enemy::m_stunTime_s = stun_time_ms * 0.001;
 }
@@ -38,6 +40,7 @@ void Game::run(Controller &controller, Renderer &renderer, Player &player, std::
         // After every second, update the window title.
         if (frame_end - title_timestamp >= 1000)
         {
+            renderer.updateWindowTitle(m_score);
             frame_count = 0;
             title_timestamp = frame_end;
         }
@@ -72,6 +75,9 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     // Shoot - Fill vector with bullets
     constexpr int OUTOFBOUNDS = 10000; // pixels
     constexpr int BULLETSIZE = 8;
+    // TODO: Make SPAWNTIME constexpr in main
+    constexpr float SPAWNTIME = 1.f;
+
     player.setTimeSinceLastShot(player.getTimeSinceLastShot() + m_timeSinceLastFrame);
     if (player.isAlive())
     {
@@ -134,6 +140,7 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
         {
             // remove bullet if enemy was hit
             destroyBulletsOutOfScreen(bullets);
+            m_score++;
         }
 
         if (!e.isStunned() && e.checkCollision(player))
@@ -141,4 +148,19 @@ void Game::update(Controller &controller, Player &player, std::vector<Bullet> &b
     }
     // remove bullet out of window
     destroyBulletsOutOfScreen(bullets);
+
+    // spawn new enemies
+    m_timeSinceLastSpawn += m_timeSinceLastFrame;
+    if(m_timeSinceLastSpawn > SPAWNTIME && player.isAlive()){
+        m_timeSinceLastSpawn = 0.f;
+        int x = m_random_w(m_engine);
+        int y = m_random_h(m_engine);
+        enemies.emplace_back(x, y, 0.f, 0.f, player.getSpeed() * m_enemy_move_speed, player.getWidth(), player.getHeight(), player.getSize());
+        m_score += 10;
+    }
+    
+}
+
+int Game::GetScore() const { 
+    return m_score; 
 }
