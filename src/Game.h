@@ -13,7 +13,7 @@ class Game
 {
 
 public:
-    Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms, int width, int height, int size);
+    Game(int bulletspeed, int time_between_shots_ms, int enemy_move_speed_percent, int stun_time_ms, int spawn_time_ms, int speed_inc_perc, int width, int height, int size);
     void run(Controller &controller, Renderer &renderer, Player &player, std::vector<Bullet> &bullets, std::vector<Enemy> enemies, int target_frame_duration);
     int GetScore() const;
 
@@ -27,6 +27,7 @@ private:
     void destroyBulletsOutOfScreen(std::vector<Bullet> &bullets);
     float m_enemy_move_speed;
     int m_score = 0;
+    float m_spawn_time_s;
 
     std::random_device m_dev;
     std::mt19937 m_engine;

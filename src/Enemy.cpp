@@ -21,9 +21,10 @@ void Enemy::update(const Asset &target, float timeSinceLastFrame)
         return; // still stunned
     }
 
+    m_new_spawend = false;
     m_Alive_s += timeSinceLastFrame;
     m_stunned = false; // wake up
-    
+
     // seek target -> normalize vector
     float delta_x = target.getX() - m_x_pos;
     float delta_y = target.getY() - m_y_pos;
@@ -38,8 +39,7 @@ void Enemy::update(const Asset &target, float timeSinceLastFrame)
     m_y_vel = m_speed * delta_y;
 
     // increase speed
-    // TODO: Make speed increase constexpr in main
-    m_speed = m_speed + (int)(0.05*m_Alive_s);
+    m_speed = m_speed + (int)(m_speed_incr_perc * 0.01 * m_Alive_s);
 }
 
 float Enemy::getTimeSinceStunned() const
@@ -73,14 +73,44 @@ bool Enemy::stun(std::vector<Bullet> &bullets)
 }
 
 float Enemy::m_stunTime_s = 2.0;
+float Enemy::m_speed_incr_perc = 1.0;
 
-int Enemy::getColorA() const{
-    int blend = (int)((m_timeSinceStunned)/m_stunTime_s*150.0) -150 + 255;
-    if (m_stunned) 
+int Enemy::getColorA() const
+{
+    int blend = (int)((m_timeSinceStunned) / m_stunTime_s * 150.0) - 150 + 255;
+    if (m_stunned)
         return blend > 255 ? 255 : blend;
     return 255;
 }
 
-bool Enemy::isStunned() const {
+int Enemy::getColorR() const
+{
+    if (m_new_spawend)
+    {
+        return 255;
+    }
+    return m_colorR;
+}
+
+int Enemy::getColorG() const
+{
+    if (m_new_spawend)
+    {
+        return 255;
+    }
+    return m_colorG;
+}
+
+int Enemy::getColorB() const
+{
+    if (m_new_spawend)
+    {
+        return 255;
+    }
+    return m_colorB;
+}
+
+bool Enemy::isStunned() const
+{
     return m_stunned;
 }

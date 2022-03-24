@@ -18,14 +18,18 @@ public:
     void setTimeSinceStunned(float time);
 
     static float m_stunTime_s;
+    static float m_speed_incr_perc;
 
     int getColorA() const;
+    int getColorR() const;
+    int getColorG() const;
+    int getColorB() const;
     bool isStunned() const;
 
 private:
     float m_timeSinceStunned = 0.f;
     bool m_stunned = true;
     float m_Alive_s = 0.f;
-
+    bool m_new_spawend = true;
 
 };
