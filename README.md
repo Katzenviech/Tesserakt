@@ -49,3 +49,30 @@ Run Away!
 ----
 inspired by:
 Tesserakt in Java https://www.youtube.com/watch?v=c3EZUMRyMkY
+
+----
+Rubric points addressed for the Udacity Capstone Project (Base: Snake-Game with SDL2)  
+
+* A README with instructions is included with the project: See above
+* The README indicates which project is chosen: Snake-Game based on SDL2, but rewritten to be a different game play: Tesserakt  
+
+* The submission must compile and run: Builds on Linux, see badge above. Project compiled for each push to Github using Github Actions
+  
+* The project demonstrates an understanding of C++ functions and control structures: member-functions and encapsulation used  
+* The project accepts user input and processes the input: Keys WASD to run around, Arrow-Keys to shoot in direction, ESC-Key to quit game  
+
+* The project uses Object Oriented Programming techniques: Class: Asset (parent), Bullet,Enemy,Player (child-classes). MVC as Game, Renderer, Controller
+* Classes use appropriate access specifiers for class members: private and public choosen as required (encapsulation)
+* Class constructors utilize member initialization lists: Yes
+* Classes abstract implementation details from their interfaces: Yes, some methods also private
+* Classes encapsulate behavior: Yes
+* Classes follow an appropriate inheritance hierarchy: Asset-base-class (Object in Game). Inherited: Bullet, Player, Enemy-Class
+* Overloaded functions allow the same function to operate on different parameters: Yes, e.g. the color of the assets  
+
+* The project uses destructors appropriately: virtual destructors used, Renderer-destructor cleans up SDL with SDL_destroy and quit 
+* The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate: RAII used, SDL2 takes care of pointers internally
+* The project uses smart pointers instead of raw pointers: No, SDL2 written in C, takes care of the pointers used internally
+
+* Concurrency: Basic game loop Input - Update - Render. Threading used by SDL2 and call to SDL_Delay()  
+
+
