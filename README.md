@@ -1,7 +1,9 @@
 # Tesserakt
 
 Build Status: ![Build Status](https://github.com/Katzenviech/Tesserakt/workflows/build/badge.svg)
+  
 
+  
 ## prerequisite to compile with MinGW64 on Windows
 Download MinGW64 e.g. from https://github.com/brechtsanders/winlibs_mingw or https://winlibs.com/ and extract e.g. to C:\MINGW64
 
@@ -44,7 +46,9 @@ On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add 
 WASD - move  
 ARROW - shoot  
 Run Away!  
+----
 
+![tesserakt-gif](https://github.com/Katzenviech/Tesserakt/blob/main/Tesserakt.gif)
 
 ----
 inspired by:
