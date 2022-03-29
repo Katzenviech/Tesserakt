@@ -42,11 +42,10 @@ then
 On windows copy over SDL2.dll to your Tesserakt.exe from %SDL2_PATH%/bin or add this directory to your System PATH
 
 
-## gameplay
+## gameplay  
 WASD - move  
 ARROW - shoot  
 Run Away!  
-----
 
 ![tesserakt-gif](https://github.com/Katzenviech/Tesserakt/blob/main/Tesserakt.gif)
 
